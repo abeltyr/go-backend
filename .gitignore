@@ -1,0 +1,7 @@
+/tmp
+/bin
+.env
+main
+main.zip
+/build
+./src/prisma/db
