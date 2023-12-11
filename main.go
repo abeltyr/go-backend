@@ -2,18 +2,15 @@
 package main
 
 import (
-	"adtec_backend/src/graphql/generated"
-	graph "adtec_backend/src/graphql/resolver"
-	"adtec_backend/src/middleware"
-	"context"
+	"adtec/backend/graphql"
+	"adtec/backend/src/middleware"
 	"flag"
 	"log"
 	"os"
 
-	"github.com/arsmn/fastgql/graphql"
-	"github.com/arsmn/fastgql/graphql/handler"
-	"github.com/arsmn/fastgql/graphql/playground"
+	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/getsentry/sentry-go"
+	"github.com/gofiber/adaptor/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -43,42 +40,25 @@ func init() {
 	})
 
 	app.Get("/playground", func(c *fiber.Ctx) error {
-		playground := playground.Handler("GraphQL playground", "/query")
+		// playground := playground.Handler("GraphQL playground", "/query")
 
-		playground(c.Context())
+		// playground(c.Context())
 		return nil
 	})
 
 	api.All("/graphql", func(c *fiber.Ctx) error {
-		config := generated.Config{
-			Resolvers: &graph.Resolver{},
-		}
 
-		defer func() {
-		}()
+		srv := handler.NewDefaultServer(graphql.NewExecutableSchema(graphql.Config{Resolvers: &graphql.Resolver{}}))
 
-		// user := c.Locals("user")
-		// accessToken := c.Locals("accessToken")
-		srv := handler.NewDefaultServer(generated.NewExecutableSchema(config))
-		srv.AroundFields(
-			func(ctx context.Context, next graphql.Resolver) (res interface{}, err error) {
-				// ctx = context.WithValue(ctx, model.ConfigKey("user"), user)
-				// ctx = context.WithValue(ctx, model.ConfigKey("accessToken"), accessToken)
-				// ctx = context.WithValue(ctx, model.ConfigKey("client"), client)
-				// ctx = context.WithValue(ctx, model.ConfigKey("clientCtx"), clientCtx)
-				// ctx = context.WithValue(ctx, model.ConfigKey("usageClient"), usageClient)
-				// ctx = context.WithValue(ctx, model.ConfigKey("usageClientCtx"), usageClientCtx)
-				return next(ctx)
-			},
-		)
-		srv.AroundOperations(func(ctx context.Context, next graphql.OperationHandler) graphql.ResponseHandler {
-			rc := graphql.GetOperationContext(ctx)
-			rc.DisableIntrospection = true
-			return next(ctx)
-		})
+		// srv.AroundFields()
+		// srv.AroundOperations(func(ctx context.Context, next graphql.OperationHandler) graphql.ResponseHandler {
+		// 	rc := graphql.GetOperationContext(ctx)
+		// 	rc.DisableIntrospection = true
+		// 	return next(ctx)
+		// })
 
-		gqlHandler := srv.Handler()
-		gqlHandler(c.Context())
+		gqlHandler := adaptor.HTTPHandler(srv)
+		gqlHandler(c)
 		return nil
 	})
 }

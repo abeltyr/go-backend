@@ -1,14 +1,11 @@
 package middleware
 
 import (
-	"errors"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
-	"github.com/lestrrat-go/jwx/jwa"
 	"github.com/lestrrat-go/jwx/jwk"
-	"github.com/lestrrat-go/jwx/jws"
 )
 
 var body []byte
@@ -26,29 +23,29 @@ func Auth(c *fiber.Ctx) error {
 	godotenv.Load(".env")
 	token := c.Request().Header.Peek("Authorization")
 
-	if token == nil {
-		log.Println("no token")
-		return errors.New("please provide authentication token")
-	}
+	// if token == nil {
+	// 	log.Println("no token")
+	// 	return errors.New("please provide authentication token")
+	// }
 
 	// parse the jwk from the api request body
 	set, err := jwk.Parse(body)
 	if err != nil {
+		log.Println(token, set)
 		log.Printf("failed to parse JWK: %s", err)
 		return err
-
 	}
 
-	var rsaData = ""
-	// verify the token against the public key
-	payload, err := jws.Verify(token, jwa.RS256, rsaData)
-	if err != nil {
-		log.Printf("failed to verify message: %s", err)
-	}
+	// var rsaData = ""
+	// // verify the token against the public key
+	// payload, err := jws.Verify(token, jwa.RS256, rsaData)
+	// if err != nil {
+	// 	log.Printf("failed to verify message: %s", err)
+	// }
 
-	log.Println(set, payload)
+	// log.Println(set, payload)
 
-	c.Locals("accessToken", string(token))
+	// c.Locals("accessToken", string(token))
 
 	return c.Next()
 }
