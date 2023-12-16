@@ -14,10 +14,7 @@ compress:
 	zip -j build/main.zip build/main
 
 glg:
-	go run github.com/arsmn/fastgql generate
+	echo "install the gqlgen dev" && go get -d github.com/99designs/gqlgen && echo "generate the graphql" && go run github.com/99designs/gqlgen generate
 
 mainBuild:
 	go build -o main main.go
-
-getfast:
-	go get github.com/arsmn/fastgql 

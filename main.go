@@ -2,7 +2,8 @@
 package main
 
 import (
-	"adtec/backend/graphql"
+	graphqlGenerated "adtec/backend/src/graphql/generated"
+	graphqlResolver "adtec/backend/src/graphql/resolver"
 	"adtec/backend/src/middleware"
 	"flag"
 	"log"
@@ -45,10 +46,13 @@ func init() {
 		// playground(c.Context())
 		return nil
 	})
+	config := graphqlGenerated.Config{
+		Resolvers: &graphqlResolver.Resolver{},
+	}
 
 	api.All("/graphql", func(c *fiber.Ctx) error {
 
-		srv := handler.NewDefaultServer(graphql.NewExecutableSchema(graphql.Config{Resolvers: &graphql.Resolver{}}))
+		srv := handler.NewDefaultServer(graphqlGenerated.NewExecutableSchema(config))
 
 		// srv.AroundFields()
 		// srv.AroundOperations(func(ctx context.Context, next graphql.OperationHandler) graphql.ResponseHandler {
