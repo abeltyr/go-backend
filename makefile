@@ -18,3 +18,9 @@ glg:
 
 mainBuild:
 	go build -o main main.go
+
+migrate-profile:
+	go run github.com/steebchen/prisma-client-go migrate dev --schema=./src/prisma/profile/schema.prisma
+
+migrate:
+	make migrate-profile 
