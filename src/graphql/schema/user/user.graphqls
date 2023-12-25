@@ -7,16 +7,3 @@ type User {
   text: String!
   done: Boolean!
 }
-
-type Query {
-  users: [User!]!
-}
-
-input NewUser {
-  text: String!
-  userId: String!
-}
-
-type Mutation {
-  createUser(input: NewUser!): User!
-}

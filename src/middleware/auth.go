@@ -28,14 +28,15 @@ func Auth(c *fiber.Ctx) error {
 	// 	return errors.New("please provide authentication token")
 	// }
 
-	// parse the jwk from the api request body
-	set, err := jwk.Parse(body)
-	if err != nil {
-		log.Println(token, set)
-		log.Printf("failed to parse JWK: %s", err)
-		return err
+	if token != nil {
+		// parse the jwk from the api request body
+		set, err := jwk.Parse(body)
+		if err != nil {
+			log.Println(token, set)
+			log.Printf("failed to parse JWK: %s", err)
+			return err
+		}
 	}
-
 	// var rsaData = ""
 	// // verify the token against the public key
 	// payload, err := jws.Verify(token, jwa.RS256, rsaData)

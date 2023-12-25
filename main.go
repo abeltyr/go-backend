@@ -5,6 +5,7 @@ import (
 	graphqlGenerated "adtec/backend/src/graphql/generated"
 	graphqlResolver "adtec/backend/src/graphql/resolver"
 	"adtec/backend/src/middleware"
+	"adtec/backend/src/utils/database"
 	"flag"
 	"log"
 	"os"
@@ -25,6 +26,8 @@ func init() {
 	log.Printf("Fiber cold start")
 
 	godotenv.Load(".env")
+
+	database.ConnectToDatabase()
 	app = fiber.New(fiber.Config{
 		BodyLimit:   20 * 1024 * 1024, // this is the default limit of MB
 		ProxyHeader: "X-Real-IP",
@@ -40,12 +43,6 @@ func init() {
 		)
 	})
 
-	app.Get("/playground", func(c *fiber.Ctx) error {
-		// playground := playground.Handler("GraphQL playground", "/query")
-
-		// playground(c.Context())
-		return nil
-	})
 	config := graphqlGenerated.Config{
 		Resolvers: &graphqlResolver.Resolver{},
 	}

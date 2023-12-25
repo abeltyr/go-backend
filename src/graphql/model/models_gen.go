@@ -2,25 +2,30 @@
 
 package model
 
-type NewTodo struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
-}
-
-type NewUser struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
-}
-
-type Todo struct {
-	ID   string `json:"id"`
-	Text string `json:"text"`
-	Done bool   `json:"done"`
-	User *User  `json:"user"`
+type Profile struct {
+	ID        string  `json:"id"`
+	UserID    string  `json:"userId"`
+	FullName  string  `json:"fullName"`
+	BirthDate *string `json:"birthDate,omitempty"`
+	Country   *string `json:"country,omitempty"`
+	Address   *string `json:"address,omitempty"`
+	City      *string `json:"city,omitempty"`
+	CreatedAt *string `json:"createdAt,omitempty"`
+	UpdatedAt *string `json:"updatedAt,omitempty"`
+	DeletedAt *string `json:"deletedAt,omitempty"`
 }
 
 type User struct {
 	ID   string `json:"id"`
 	Text string `json:"text"`
 	Done bool   `json:"done"`
+}
+
+type CreateProfileInput struct {
+	UserID    string  `json:"userId"`
+	FullName  string  `json:"fullName"`
+	BirthDate *string `json:"birthDate,omitempty"`
+	Country   *string `json:"country,omitempty"`
+	Address   *string `json:"address,omitempty"`
+	City      *string `json:"city,omitempty"`
 }

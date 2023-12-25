@@ -7,18 +7,23 @@ package resolver
 import (
 	"adtec/backend/src/graphql/generated"
 	"adtec/backend/src/graphql/model"
+	"adtec/backend/src/router/profileRouter"
 	"context"
 	"fmt"
 )
 
-// CreateUser is the resolver for the createUser field.
-func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: CreateUser - createUser"))
+// CreateProfile is the resolver for the createProfile field.
+func (r *mutationResolver) CreateProfile(ctx context.Context, input model.CreateProfileInput) (*model.Profile, error) {
+
+	// TODO:the userId should be fetched from the current user token
+	// ctx = context.WithValue(ctx, srcModel.ConfigKey("currentUser"), currentUser)
+
+	return profileRouter.Create(ctx, input)
 }
 
-// Users is the resolver for the users field.
-func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
-	panic(fmt.Errorf("not implemented: Users - users"))
+// Profile is the resolver for the profile field.
+func (r *queryResolver) Profile(ctx context.Context) (*model.Profile, error) {
+	panic(fmt.Errorf("not implemented: Profile - profile"))
 }
 
 // Mutation returns generated.MutationResolver implementation.

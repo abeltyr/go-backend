@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "Profile" (
+CREATE TABLE "profiles" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "fullName" TEXT NOT NULL,
@@ -12,8 +12,8 @@ CREATE TABLE "Profile" (
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deletedAt" TIMESTAMP(3),
 
-    CONSTRAINT "Profile_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "profiles_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Profile_userId_key" ON "Profile"("userId");
+CREATE UNIQUE INDEX "profiles_userId_key" ON "profiles"("userId");
