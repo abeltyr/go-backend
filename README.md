@@ -40,7 +40,6 @@ Key features include:
 - **Prisma Integration**: Incorporates Prisma for type-safe and scalable database access, simplifying database operations and migrations with ease.
 - **GraphQL Support**: Comes with a preconfigured GraphQL setup for developing flexible APIs, reducing the boilerplate needed to handle client requests.
 - **Middleware Ready**: A ready-to-use middleware stack to handle authentication, error logging, request parsing, CORS, and other HTTP-related functionalities.
-- **Service Layer**: Encapsulates business logic within services, promoting clean code practices and making the codebase more maintainable.
-- **AWS S3 Services**: Built-in services for interacting with AWS S3, providing a seamless file storage solution that is scalable and secure.
-- **Automated Testing**: A dedicated testing suite to ensure the reliability and quality of the application through unit and integration tests.
-- **Makefile Automation**: Streamlines the development workflow with a `makefile` containing scripts for setting up the development environment, building, compressing, and migrating the database, making it convenient to manage the application lifecycle.
+- **Router Layer**: Encapsulates business logic within routers, promoting clean code practices and making the codebase more maintainable.
+- **Service Layer**: The service layer handle the logic behind database and third-party services. This separation of concerns ensures that business logic can be developed and maintained independently of the underlying data access or external service integrations.
+- **Testing**: A dedicated testing suite to ensure the reliability and quality of the application through unit and integration tests.
